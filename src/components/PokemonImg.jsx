@@ -1,16 +1,15 @@
 import { useState, useEffect } from "react";
 import "../styles/loader.css";
 
-const PokemonImg = () => {
+const PokemonImg = (pokemonId) => {
   const [imageUrl, setImageUrl] = useState(null);
   useEffect(() => {
     const controller=new AbortController();
     const signal=controller.signal;
     const fetchPokemonImage=async()=>{
       try{
-        const randomID = Math.ceil(Math.random() * 1025);
         const response = await fetch(
-          `https://pokeapi.co/api/v2/pokemon/${randomID}/`,
+          `https://pokeapi.co/api/v2/pokemon/${pokemonId}/`,
             {signal}
         );
         const json = await response.json();
@@ -25,7 +24,7 @@ const PokemonImg = () => {
     return ()=>{
       controller.abort();
     }
-  }, []);
+  }, [pokemonId]);
   return (
     <>
       {imageUrl? <img src={imageUrl}></img>: <div className="loader"></div>}

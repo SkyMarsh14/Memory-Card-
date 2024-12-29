@@ -1,9 +1,10 @@
-import PokemonImg from "./PokemonImg";
+import { useState } from "react";
+import CardList from "./CardList";
 export default function App(){
-    const key1=crypto.randomUUID();
     return (
         <>
-        <PokemonImg key={key1}/>
+        <CardList />
         </>
     )
 }
+
