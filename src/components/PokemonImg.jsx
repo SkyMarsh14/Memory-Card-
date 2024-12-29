@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../styles/loader.css";
 
-const PokemonImg = (pokemonId) => {
+const PokemonImg = ({pokemonId}) => {
   const [imageUrl, setImageUrl] = useState(null);
   useEffect(() => {
     const controller=new AbortController();
