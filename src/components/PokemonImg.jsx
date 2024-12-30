@@ -4,9 +4,9 @@ import "../styles/loader.css";
 
 const PokemonImg = ({ pokemonId }) => {
   if (typeof pokemonId !== "number"){
-    throw new Error(`Pokemon Id has an incorrect value. ${pokemonId}`)
+    throw new Error(`Pokemon Id has an incorrect value. ${pokemonId}`);
   }
-  const cardList=useContext(CardContext);
+  const {cardList,updateCardList}=useContext(CardContext);
   const [imageUrl, setImageUrl] = useState(null);
   const [alt, setAlt] = useState(null);
   useEffect(() => {
@@ -34,7 +34,7 @@ const PokemonImg = ({ pokemonId }) => {
   return (
     <>
       {imageUrl ? (
-        <button className="card"><img src={imageUrl} alt={`Pokemon: ${alt}`}></img></button>
+        <button onClick={(e)=>handleClick(e,updateCardList)}className="card"><img src={imageUrl} alt={`Pokemon: ${alt}`}></img></button>
       ) : (
         <div className="loader"></div>
       )}
@@ -42,4 +42,8 @@ const PokemonImg = ({ pokemonId }) => {
   );
 };
 
+function handleClick(e,updateCard){
+  e.preventDefault();
+  updateCard(e.target.src)
+}
 export default PokemonImg;
