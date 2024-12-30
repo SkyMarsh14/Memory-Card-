@@ -1,8 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import CardContext from "../util.js/CardContext";
 import "../styles/loader.css";
 
 const PokemonImg = ({ pokemonId }) => {
-  if (typeof pokemonId !== "number") return;
+  if (typeof pokemonId !== "number"){
+    throw new Error(`Pokemon Id has an incorrect value. ${pokemonId}`)
+  }
+  const cardList=useContext(CardContext);
   const [imageUrl, setImageUrl] = useState(null);
   const [alt, setAlt] = useState(null);
   useEffect(() => {
@@ -30,7 +34,7 @@ const PokemonImg = ({ pokemonId }) => {
   return (
     <>
       {imageUrl ? (
-        <img src={imageUrl} alt={`Pokemon: ${alt}`}></img>
+        <button className="card"><img src={imageUrl} alt={`Pokemon: ${alt}`}></img></button>
       ) : (
         <div className="loader"></div>
       )}

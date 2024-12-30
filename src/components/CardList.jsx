@@ -1,5 +1,6 @@
+import "../styles/cardList.css";
 import PokemonImg from "./PokemonImg";
-import getUniqueNumber from "../genPokemonIDs";
+import getUniqueNumber from "../util.js/genPokemonIDs";
 
 const CardList = () => {
   const pokeIndexs = getUniqueNumber(10, 1, 30);
