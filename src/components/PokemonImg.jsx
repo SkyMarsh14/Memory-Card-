@@ -6,12 +6,15 @@ const PokemonImg = ({ pokemonIndex }) => {
   if (typeof pokemonIndex !== "number") {
     throw new Error(`Pokemon Id has an incorrect value. ${pokemonIndex}`);
   }
-  const { cardList, updateCardList } = useContext(CardContext);
+  const { updateCardList } = useContext(CardContext);
   const [imageUrl, setImageUrl] = useState(null);
   const [alt, setAlt] = useState(null);
   function handleClick(e) {
-    updateCardList(cardList.add(e.target.src));
-    console.log(cardList);
+    updateCardList((prev) => {
+      const newSet = new Set(prev);
+      newSet.add(e.target.src);
+      return newSet;
+    });
   }
   useEffect(() => {
     const controller = new AbortController();
@@ -42,7 +45,9 @@ const PokemonImg = ({ pokemonIndex }) => {
           <img src={imageUrl} alt={`Pokemon: ${alt}`}></img>
         </button>
       ) : (
-        <div className="loader"></div>
+        <button type="button" className="card">
+          <div className="loader"></div>
+        </button>
       )}
     </>
   );
