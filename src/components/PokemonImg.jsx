@@ -2,20 +2,24 @@ import { useState, useEffect, useContext } from "react";
 import CardContext from "../util.js/CardContext";
 import "../styles/loader.css";
 
-const PokemonImg = ({ pokemonId }) => {
-  if (typeof pokemonId !== "number"){
-    throw new Error(`Pokemon Id has an incorrect value. ${pokemonId}`)
+const PokemonImg = ({ pokemonIndex }) => {
+  if (typeof pokemonIndex !== "number") {
+    throw new Error(`Pokemon Id has an incorrect value. ${pokemonIndex}`);
   }
-  const cardList=useContext(CardContext);
+  const { cardList, updateCardList } = useContext(CardContext);
   const [imageUrl, setImageUrl] = useState(null);
   const [alt, setAlt] = useState(null);
+  function handleClick(e) {
+    updateCardList(cardList.add(e.target.src));
+    console.log(cardList);
+  }
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
     const fetchPokemonImage = async () => {
       try {
         const response = await fetch(
-          `https://pokeapi.co/api/v2/pokemon/${pokemonId}/`,
+          `https://pokeapi.co/api/v2/pokemon/${pokemonIndex}/`,
           { signal }
         );
         const json = await response.json();
@@ -30,11 +34,13 @@ const PokemonImg = ({ pokemonId }) => {
     return () => {
       controller.abort();
     };
-  }, [pokemonId]);
+  }, [pokemonIndex]);
   return (
     <>
       {imageUrl ? (
-        <button className="card"><img src={imageUrl} alt={`Pokemon: ${alt}`}></img></button>
+        <button onClick={handleClick} type="button" className="card">
+          <img src={imageUrl} alt={`Pokemon: ${alt}`}></img>
+        </button>
       ) : (
         <div className="loader"></div>
       )}

@@ -1,12 +1,12 @@
 header {
   display: grid;
-  grid-template-columns: 3fr 1fr;
-  justify-items:center;
+  grid-template-columns: 2fr 1fr 1fr;
+  justify-items: center;
   align-items: center;
 }
 .header-logo {
   display: inline-block;
   height: max-content;
   max-height: 80px;
-  min-width:80px;
+  min-width: 80px;
 }

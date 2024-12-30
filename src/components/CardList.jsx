@@ -1,13 +1,14 @@
 import "../styles/cardList.css";
 import PokemonImg from "./PokemonImg";
-import getUniqueNumber from "../util.js/genPokemonIDs";
+import genPokemonData from "../util.js/genPokemonData.js";
 
+const pokemonData = genPokemonData(10, 1, 30);
+console.log(pokemonData);
 const CardList = () => {
-  const pokeIndexs = getUniqueNumber(10, 1, 30);
   return (
     <div className="card-container">
-      {pokeIndexs.map((index) => (
-        <PokemonImg pokemonId={index} key={crypto.randomUUID()} />
+      {pokemonData.map((pokemon) => (
+        <PokemonImg pokemonIndex={pokemon.index} key={pokemon.id} />
       ))}
     </div>
   );
