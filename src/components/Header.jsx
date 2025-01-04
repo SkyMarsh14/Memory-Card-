@@ -6,12 +6,14 @@ const Header = () => {
   const { cardList, bestScore } = useContext(CardContext);
   return (
     <header>
-      <h1>Pokemon Memory Game</h1>
+      <div className="logo">
+        <img src={pokemonLogo} alt="Pokemon Logo" />
+        <p>Do not click the same card twice!</p>
+      </div>
       <div className="score">
         <div>Score: {cardList.size}</div>
         <div>Best Score: {bestScore}</div>
       </div>
-      <img src={pokemonLogo} alt="Pokemon Logo" className="header-logo" />
     </header>
   );
 };

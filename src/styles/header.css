@@ -1,12 +1,19 @@
-header {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  justify-items: center;
-  align-items: center;
+@font-face {
+  font-display: swap;
+  font-family: "Londarina Shadow";
+  src: url("../fonts/Londrina_Shadow/LondrinaShadow-Regular.ttf");
 }
-.header-logo {
+header {
+  display: flex;
+  font-family: "Londarina Shadow";
+  color: blue;
+  font-size: clamp(1em, 3vw, 3em);
+  justify-content: space-between;
+  align-items: center;
+  margin: 1em 2em;
+}
+.logo > img {
   display: inline-block;
   height: max-content;
-  max-height: 80px;
-  min-width: 80px;
+  max-height: 160px;
 }

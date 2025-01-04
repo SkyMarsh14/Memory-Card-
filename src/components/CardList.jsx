@@ -4,14 +4,14 @@ import genPokemonData from "../util.js/genPokemonData.js";
 import { useState } from "react";
 
 const CardList = () => {
-  const [pokemonData, setPokemonData] = useState(genPokemonData(10, 1, 30));
+  const [cardArr, setCardArr] = useState(genPokemonData(10, 1, 30));
   return (
     <div className="card-container">
-      {pokemonData.map((pokemon) => (
+      {cardArr.map((pokemon) => (
         <PokemonImg
           pokemonIndex={pokemon.index}
           key={pokemon.id}
-          setPokemonData={setPokemonData}
+          setCardArr={setCardArr}
         />
       ))}
     </div>

@@ -2,26 +2,27 @@ import { useState, useEffect, useContext } from "react";
 import CardContext from "../util.js/CardContext";
 import "../styles/loader.css";
 import shuffle from "../util.js/shuffule";
+import genPokemonData from "../util.js/genPokemonData";
 
-const PokemonImg = ({ pokemonIndex, setPokemonData }) => {
+const PokemonImg = ({ pokemonIndex, setCardArr }) => {
   if (typeof pokemonIndex !== "number") {
     throw new Error(`Pokemon Id has an incorrect value. ${pokemonIndex}`);
   }
   const { updateCardList, setBestScore } = useContext(CardContext);
-  const [imageUrl, setImageUrl] = useState(null);
-  const [alt, setAlt] = useState(null);
+  const [cardData, setCardData] = useState(null);
   function handleClick(e) {
     updateCardList((prev) => {
       const clickedSrc = e.target.src;
       if (prev.has(clickedSrc) || prev.size === 10) {
         setBestScore(prev.size);
+        setCardArr(genPokemonData(10, 1, 30));
         return new Set();
       }
       const newSet = new Set(prev);
       newSet.add(clickedSrc);
       return newSet;
     });
-    setPokemonData((prev) => {
+    setCardArr((prev) => {
       return shuffle(prev);
     });
   }
@@ -36,8 +37,7 @@ const PokemonImg = ({ pokemonIndex, setPokemonData }) => {
         );
         const json = await response.json();
         const image = json.sprites.other["official-artwork"].front_default;
-        setAlt(json.name);
-        setImageUrl(image);
+        setCardData({ image: image, name: json.name });
       } catch (error) {
         console.error("Error fetching Pokemon", error);
       }
@@ -46,12 +46,13 @@ const PokemonImg = ({ pokemonIndex, setPokemonData }) => {
     return () => {
       controller.abort();
     };
-  }, [pokemonIndex]);
+  }, [pokemonIndex, cardData]);
   return (
     <>
-      {imageUrl ? (
+      {cardData ? (
         <button onClick={handleClick} type="button" className="card">
-          <img src={imageUrl} alt={`Pokemon: ${alt}`}></img>
+          <img src={cardData.image} alt={`Pokemon: ${cardData.name}`}></img>
+          <div className="pokemonName">{cardData.name}</div>
         </button>
       ) : (
         <button type="button" className="card">
