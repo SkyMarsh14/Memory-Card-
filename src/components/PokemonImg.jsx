@@ -1,8 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 import CardContext from "../util.js/CardContext";
 import "../styles/loader.css";
+import shuffle from "../util.js/shuffule";
 
-const PokemonImg = ({ pokemonIndex }) => {
+const PokemonImg = ({ pokemonIndex, setPokemonData }) => {
   if (typeof pokemonIndex !== "number") {
     throw new Error(`Pokemon Id has an incorrect value. ${pokemonIndex}`);
   }
@@ -10,9 +11,13 @@ const PokemonImg = ({ pokemonIndex }) => {
   const [imageUrl, setImageUrl] = useState(null);
   const [alt, setAlt] = useState(null);
   function handleClick(e) {
+    setPokemonData((prev) => {
+      return shuffle(prev);
+    });
     updateCardList((prev) => {
+      const clickedSrc = e.target.src;
       const newSet = new Set(prev);
-      newSet.add(e.target.src);
+      newSet.add(clickedSrc);
       return newSet;
     });
   }
