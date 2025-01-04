@@ -7,18 +7,22 @@ const PokemonImg = ({ pokemonIndex, setPokemonData }) => {
   if (typeof pokemonIndex !== "number") {
     throw new Error(`Pokemon Id has an incorrect value. ${pokemonIndex}`);
   }
-  const { updateCardList } = useContext(CardContext);
+  const { updateCardList, setBestScore } = useContext(CardContext);
   const [imageUrl, setImageUrl] = useState(null);
   const [alt, setAlt] = useState(null);
   function handleClick(e) {
-    setPokemonData((prev) => {
-      return shuffle(prev);
-    });
     updateCardList((prev) => {
       const clickedSrc = e.target.src;
+      if (prev.has(clickedSrc) || prev.size === 10) {
+        setBestScore(prev.size);
+        return new Set();
+      }
       const newSet = new Set(prev);
       newSet.add(clickedSrc);
       return newSet;
+    });
+    setPokemonData((prev) => {
+      return shuffle(prev);
     });
   }
   useEffect(() => {
